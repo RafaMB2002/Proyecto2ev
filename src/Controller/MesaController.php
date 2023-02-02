@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/api/mesa', name: 'api_mesa_')]
 class MesaController
 {
     private $mesaRepository;
@@ -18,7 +19,7 @@ class MesaController
         $this->mesaRepository = $mesaRepository;
     }
 
-    #[Route('/mesa/add', name: 'add_mesa', methods: 'POST')]
+    #[Route('/add', name: 'add', methods: 'POST')]
     public function add(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -39,7 +40,7 @@ class MesaController
 
         return new JsonResponse($data, Response::HTTP_CREATED);
     }
-    #[Route('/mesa/get/{id}', name: 'get_one_mesa', methods: 'GET')]
+    #[Route('/get/{id}', name: 'get_one', methods: 'GET')]
     public function get($id): JsonResponse
     {
         $mesa = $this->mesaRepository->findOneBy(['id' => $id]);
@@ -58,7 +59,7 @@ class MesaController
         return new JsonResponse($data, Response::HTTP_OK);
     }
 
-    #[Route("/mesa/getAll", name: "get_all_mesa", methods: "GET")]
+    #[Route("/getAll", name: "get_all", methods: "GET")]
     public function getAll(): JsonResponse
     {
         $mesas = $this->mesaRepository->findAll();
@@ -80,7 +81,7 @@ class MesaController
         return new JsonResponse($data, Response::HTTP_OK);
     }
 
-    #[Route("/mesa/update/{id}", name: "update_mesa", methods: "PUT")]
+    #[Route("/update/{id}", name: "update", methods: "PUT")]
     public function update($id, Request $request): JsonResponse
     {
         $mesa = $this->mesaRepository->findOneBy(['id' => $id]);
@@ -101,7 +102,7 @@ class MesaController
         return new JsonResponse($data, Response::HTTP_OK);
     }
 
-    #[Route("/mesa/delete/{id}", name: "delete_mesa", methods: "DELETE")]
+    #[Route("/delete/{id}", name: "delete", methods: "DELETE")]
     public function delete($id): JsonResponse
     {
         $mesa = $this->mesaRepository->findOneBy(['id' => $id]);
