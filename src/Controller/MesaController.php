@@ -108,6 +108,6 @@ class MesaController
 
         $this->mesaRepository->removeMesa($mesa);
         $data = ["result" => true];
-        return new JsonResponse($data, Response::HTTP_NO_CONTENT);
+        return new JsonResponse($data, Response::HTTP_OK);
     }
 }
