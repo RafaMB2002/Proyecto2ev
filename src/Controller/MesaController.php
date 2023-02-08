@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\MesaRepository;
+use PhpParser\Node\Stmt\TryCatch;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,20 +44,32 @@ class MesaController
     #[Route('/get/{id}', name: 'get_one', methods: 'GET')]
     public function get($id): JsonResponse
     {
-        $mesa = $this->mesaRepository->findOneBy(['id' => $id]);
+        try {
 
-        $data = [
-            'result' => true,
-            'object' => [
-                'id' => $mesa->getId(),
-                'anchura' => $mesa->getAnchura(),
-                'altura' => $mesa->getAltura(),
-                'x' => $mesa->getX(),
-                'y' => $mesa->getY(),
-            ]
-        ];
+            $mesa = $this->mesaRepository->findOneBy(['id' => $id]);
 
-        return new JsonResponse($data, Response::HTTP_OK);
+            $data = [
+                'result' => true,
+                'object' => [
+                    'id' => $mesa->getId(),
+                    'anchura' => $mesa->getAnchura(),
+                    'altura' => $mesa->getAltura(),
+                    'x' => $mesa->getX(),
+                    'y' => $mesa->getY(),
+                ]
+            ];
+            $response = new JsonResponse($data, Response::HTTP_OK);
+        } catch (\Throwable $th) {
+
+            $data = [
+                'result' => false
+            ];
+
+            $response = new JsonResponse($data, Response::HTTP_NOT_FOUND);
+        }
+
+
+        return $response;
     }
 
     #[Route("/getAll", name: "get_all", methods: "GET")]

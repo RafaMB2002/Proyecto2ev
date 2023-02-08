@@ -9,8 +9,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
     #[Route('/', name: 'landing_page')]
-    public function index():Response
+    public function landing():Response
     {
         return $this->render('landing/landingPage.html.twig');
+    }
+
+    #[Route('/gestionMesas', name: 'gestion_mesas')]
+    public function gestionMesas():Response
+    {
+        return $this->render('gestionMesas/gestionMesas.html.twig');
     }
 }
