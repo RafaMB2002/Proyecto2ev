@@ -9,9 +9,14 @@ class Mesa {
 }
 
 function newMesa(id, anchura, altura, x, y) {
+  var topSala = $("#sala").offset().top;
+  var leftSala = $("#sala").offset().left;
   const newMesa = new Mesa(id, anchura, altura, x, y);
 
-  if (newMesa.x == null && newMesa.y == null) {
+  if (
+    (newMesa.x == null && newMesa.y == null) ||
+    (newMesa.x == -1 && newMesa.y == -1)
+  ) {
     $("<div>")
       .addClass("mesa")
       .attr("id", id)
@@ -28,6 +33,11 @@ function newMesa(id, anchura, altura, x, y) {
       .css("height", newMesa.altura)
       .attr("data-x", newMesa.x)
       .attr("data-y", newMesa.y)
+      .css({
+        position: "absolute",
+        top: newMesa.y+topSala,
+        left: newMesa.x+leftSala,
+      })
       .appendTo("#sala");
   }
 

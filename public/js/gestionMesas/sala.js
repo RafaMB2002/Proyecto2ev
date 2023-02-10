@@ -4,8 +4,8 @@ function droppableSala() {
   $("#sala").droppable({
     drop: function (ev, ui) {
       var mesa = ui.draggable;
-      var left = parseInt(ui.offset.left-leftSala);
-      var top = parseInt(ui.offset.top-topSala);
+      var left = parseInt(ui.offset.left - leftSala);
+      var top = parseInt(ui.offset.top - topSala);
       let width = mesa.width();
       let height = mesa.height();
 
@@ -14,11 +14,9 @@ function droppableSala() {
       let mesaYa = $("#sala .mesa");
       let valido = true;
       $.each(mesaYa, function (key, mesa2) {
-        if (
-          mesa2.id != mesa.get(0).id
-        ) {
-          let posX = parseInt(mesa2.offsetLeft-leftSala);
-          let posY = parseInt(mesa2.offsetTop-topSala);
+        if (mesa2.id != mesa.get(0).id) {
+          let posX = parseInt(mesa2.offsetLeft - leftSala);
+          let posY = parseInt(mesa2.offsetTop - topSala);
           let anchura = mesa2.offsetWidth;
           let altura = mesa2.offsetHeight;
           let pos2 = [posX, posX + anchura, posY, posY + altura];
@@ -38,12 +36,18 @@ function droppableSala() {
       });
 
       if (valido) {
-        mesa.css({
-          position: "absolute",
-          top: top+topSala + "px",
-          left: left+leftSala + "px",
+        var position = {
+          x: ui['position'].left-leftSala,
+          y: ui['position'].top-topSala
+        };
+        $.ajax({
+          method: "PUT",
+          url: "/api/mesa/update/"+mesa[0].id,
+          dataType: "json",
+          data: JSON.stringify(position)
+        }).done(function (data) {
+          location.reload()
         });
-        $(this).append(mesa);
       }
     },
   });
