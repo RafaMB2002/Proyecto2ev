@@ -2,6 +2,35 @@
 {% block title %}
     Registro
 {% endblock %}
+{% block header %}
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-primary text-white d-none d-lg-flex">
+        <div class="container py-3">
+            <div class="d-flex align-items-center">
+                <a href="{{absolute_url(path('landing_page'))}}">
+                    <h2 class="text-white fw-bold m-0">Xokas y Cía</h2>
+                </a>
+                <div class="ms-auto d-flex align-items-center">
+                    <small class="ms-4"><i class="fa fa-map-marker-alt me-3"></i>C/ Ntra. Sra. de la Consolación nº8, Lahiguera, España</small>
+                    <small class="ms-4"><i class="fa fa-envelope me-3"></i>rmonber2302@g.educaand.es</small>
+                    <small class="ms-4"><i class="fa fa-phone-alt me-3"></i>+34 644 88 61 80</small>
+                    <div class="ms-3 d-flex">
+                        <a class="btn btn-sm-square btn-light text-primary rounded-circle ms-2" href=""><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-sm-square btn-light text-primary rounded-circle ms-2" href=""><i
+                                class="fab fa-twitter"></i></a>
+                        <a class="btn btn-sm-square btn-light text-primary rounded-circle ms-2" href=""><i
+                                class="fab fa-linkedin-in"></i></a>
+                    </div>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <small class="ms-4">{{app.user.email}}</small>
+                        {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+{% endblock %}
 {% block body %}
     {{form(form)}}
 {% endblock %}

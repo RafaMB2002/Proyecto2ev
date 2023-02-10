@@ -25,6 +25,9 @@ class Mesa
     #[ORM\Column(nullable: true)]
     private ?int $y = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $img = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -88,4 +91,16 @@ class Mesa
         'y' => $this->getY() 
     ]; 
 }
+
+    public function getImg(): ?string
+    {
+        return $this->img;
+    }
+
+    public function setImg(?string $img): self
+    {
+        $this->img = $img;
+
+        return $this;
+    }
 }

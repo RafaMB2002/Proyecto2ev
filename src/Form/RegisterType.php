@@ -3,10 +3,13 @@
 namespace App\Form;
 
 use App\Entity\User;
+use PhpParser\Node\Stmt\Label;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,6 +24,8 @@ class RegisterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('Nombre')
+            ->add('Apellidos')
             ->add('email', EmailType::class)
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -39,6 +44,15 @@ class RegisterType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
+            ])
+            ->add('avatar', ChoiceType::class, [
+                'label' => 'Genero',
+                'choices' => [
+                    'Hombre' => 'perfil.png',
+                    'Mujer' => 'mujer.png',
+                    'Prefiero no decirlo' => 'user.png'
+                ],
+                'expanded' => true
             ])
             ->add('acepto_los_terminos', CheckboxType::class, [
                 'mapped' => false,
