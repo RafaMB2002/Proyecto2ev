@@ -36,6 +36,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $Avatar = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $api_token = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $telegram = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -144,5 +150,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getFullName(){
         return $this->Nombre." ".$this->Apellidos;
+    }
+
+    public function getApiToken(): ?string
+    {
+        return $this->api_token;
+    }
+
+    public function setApiToken(?string $api_token): self
+    {
+        $this->api_token = $api_token;
+
+        return $this;
+    }
+
+    public function getTelegram(): ?string
+    {
+        return $this->telegram;
+    }
+
+    public function setTelegram(?string $telegram): self
+    {
+        $this->telegram = $telegram;
+
+        return $this;
     }
 }

@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'landing/landingPage.html.twig' %}
 {% block title %}
     Registro
 {% endblock %}
@@ -32,6 +32,77 @@
     <!-- Topbar End -->
 {% endblock %}
 {% block body %}
-    {{form(form)}}
+    <form class="container-fluid p-5 text-center">
+        <div class="row justify-content-center">
+            <label class="col-3">
+                {{ form_label(form.Nombre) }}
+            </label>
+            <div class="col-3">
+                {{ form_widget(form.Nombre) }}
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <label class="col-md-3">
+                {{ form_label(form.Apellidos) }}
+            </label>
+            <div class="col-md-3">
+                {{ form_widget(form.Apellidos) }}
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <label class="col-md-3">
+                {{ form_label(form.email) }}
+            </label>
+            <div class="col-md-3">
+                {{ form_widget(form.email) }}
+            </div>
+        </div>
+            {% for passwordField in form.password %}
+                <div class="row justify-content-center">
+                    <div class="col-md-3">
+                        {{ form_label(passwordField, null, { 'attr': {'class': 'form-label'} }) }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form_widget(passwordField, { 'attr': {'class': 'form-input'} }) }}
+                    </div>
+                </div>
+            {% endfor %}
+        <div>
+        <div class="row justify-content-center">
+            <label class="col-md-3">
+                {{ form_label(form.avatar) }}
+            </label>
+                <div class="row">
+                    {{ form_label(form.avatar.children[0]) }}
+                    {{ form_widget(form.avatar.children[0]) }}
+                </div>
+                <div class="row">
+                    {{ form_label(form.avatar.children[1]) }}
+                    {{ form_widget(form.avatar.children[1]) }}
+                </div>
+                <div class="row">
+                    {{ form_label(form.avatar.children[2]) }}
+                    {{ form_widget(form.avatar.children[2]) }}
+                </div>
+        </div>
+        <div class="row">
+            <label class="col-md-6">
+                {{ form_label(form.acepto_los_terminos) }}
+            </label>
+            <div class="col-md-6">
+                {{ form_widget(form.acepto_los_terminos) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                {{ form_widget(form.Registrarse) }}
+            </div>
+        </div>
+
+    </form>
+{% endblock %}
+
+{% block footer %}
+    
 {% endblock %}
 
