@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -41,6 +42,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $telegram = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $last_session = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $time_last_session = null;
 
     public function getId(): ?int
     {
@@ -172,6 +179,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTelegram(?string $telegram): self
     {
         $this->telegram = $telegram;
+
+        return $this;
+    }
+
+    public function getLastSession(): ?\DateTimeInterface
+    {
+        return $this->last_session;
+    }
+
+    public function setLastSession(?\DateTimeInterface $last_session): self
+    {
+        $this->last_session = $last_session;
+
+        return $this;
+    }
+
+    public function getTimeLastSession(): ?\DateTimeInterface
+    {
+        return $this->time_last_session;
+    }
+
+    public function setTimeLastSession(?\DateTimeInterface $time_last_session): self
+    {
+        $this->time_last_session = $time_last_session;
 
         return $this;
     }

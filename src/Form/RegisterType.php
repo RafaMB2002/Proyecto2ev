@@ -62,7 +62,9 @@ class RegisterType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('Registrarse', SubmitType::class);
+            ->add('Registrarse', SubmitType::class, [
+                'attr' => ['class' => 'btn btn-primary rounded-pill py-2 px-3']
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
