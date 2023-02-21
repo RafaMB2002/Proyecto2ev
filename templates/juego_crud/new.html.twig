@@ -1,0 +1,31 @@
+{# {% extends 'base.html.twig' %}
+
+{% block title %}New Juego{% endblock %}
+
+{% block body %}
+    <h1>Create new Juego</h1>
+
+    {{ include('juego_crud/_form.html.twig') }}
+
+    <a href="{{ path('app_juego_crud_index') }}">back to list</a>
+{% endblock %} #}
+
+{% extends 'landing/landingPage.html.twig' %}
+ 
+{% block title %}Nuevo Juego{% endblock %}
+ 
+{% block body %}
+    <div class="container">
+        <h2 class="text-center mt-5 mb-3">Crear Juego</h2>
+        <div class="card">
+            <div class="card-header">
+                <a class="btn btn-outline-info float-right" href="{{ path('app_juego_crud_index') }}"> 
+                    Ver todos los juegos
+                </a>
+            </div>
+            <div class="card-body">
+                 {{ include('juego_crud/_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

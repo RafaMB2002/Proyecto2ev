@@ -23,7 +23,11 @@
                                 class="fab fa-linkedin-in"></i></a>
                     </div>
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                            <small class="ms-4">{{app.user.email}}</small>
+                    <div class="ms-auto d-flex align-items-center">
+                        <small class="ms-4">{{app.user.nombre}}</small>
+                        <a class="btn btn-sm-square btn-light text-primary rounded-circle ms-2" href=""><img src="/img/avatar/{{app.user.avatar}}" style="width:40px"></a>
+                    </div>
+                            
                         {% endif %}
                 </div>
             </div>
@@ -61,8 +65,12 @@
                             <a href="{{absolute_url(path('gestion_mesas'))}}" class="nav-item nav-link">Gestion de mesas</a>
                         {% endif %}
                         {% if is_granted('ROLE_ADMIN')%}
+                            <a href="{{absolute_url(path('app_juego_crud_index'))}}" class="nav-item nav-link">Gestion de juegos</a>
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN')%}
                             <a href="/admin" class="nav-item nav-link">CRUD</a>
                         {% endif %}
+                        <a href="{{absolute_url(path('listado_juegos'))}}" class="nav-item nav-link">Listado de Juegos</a>
                         
                     </div>
                     <div class="ms-auto d-none d-lg-block">
@@ -254,10 +262,10 @@
                         <div class="service-text rounded p-5">
                             <div class="btn-square bg-light rounded-circle mx-auto mb-4"
                                 style="width: 64px; height: 64px;">
-                                <img class="img-fluid" src="img/juegosDeMesa/parchis.png" alt="Icon">
+                                <img class="img-fluid" src={{"img/juegosDeMesa/"~juegos[1].imagen}} alt="Icon">
                             </div>
-                            <h5 class="mb-3">Parchis</h4>
-                                <p class="mb-0">Juego de mesa que se practica en un tablero con cuatro salidas y con casillas numeradas, en el que cada jugador trata de hacer llegar sus cuatro fichas, avanzando según determina el dado, a la casilla central, y gana el primero que lo consigue.</p>
+                            <h5 class="mb-3">{{juegos[1].nombre}}</h4>
+                                <p class="mb-0">{{juegos[1].descripcion}}</p>
                         </div>
                         <div class="service-btn rounded-0 rounded-bottom">
                             <a class="text-primary fw-medium" href="">Leer mas<i
@@ -270,10 +278,10 @@
                         <div class="service-text rounded p-5">
                             <div class="btn-square bg-light rounded-circle mx-auto mb-4"
                                 style="width: 64px; height: 64px;">
-                                <img class="img-fluid" src="img/JuegosDeMesa/ajedrez.png" alt="Icon">
+                                <img class="img-fluid" src={{"img/juegosDeMesa/"~juegos[2].imagen}} alt="Icon">
                             </div>
-                            <h5 class="mb-3">Ajedrez</h4>
-                                <p class="mb-0">Es un juego de estrategia en el que dos personas se desafían frente a un tablero cuadriculado de 64 casillas y dos grupos de figuras, 16 para cada jugador, unas blancas y otras negras: un rey, una dama, dos alfiles, dos caballos, dos torres y ocho peones.</p>
+                            <h5 class="mb-3">{{juegos[2].nombre}}</h4>
+                                <p class="mb-0">{{juegos[2].descripcion}}</p>
                         </div>
                         <div class="service-btn rounded-0 rounded-bottom">
                             <a class="text-primary fw-medium" href="">Leer mas<i
@@ -286,58 +294,10 @@
                         <div class="service-text rounded p-5">
                             <div class="btn-square bg-light rounded-circle mx-auto mb-4"
                                 style="width: 64px; height: 64px;">
-                                <img class="img-fluid" src="img/JuegosDeMesa/domino.jpg" alt="Icon">
+                                <img class="img-fluid" src={{"img/juegosDeMesa/"~juegos[0].imagen}} alt="Icon">
                             </div>
-                            <h5 class="mb-3">Domino</h4>
-                                <p class="mb-0">Se compone de 28 fichas rectangulares. En este juego pueden participar dos, tres o cuatro personas.. Cada ficha está dividida en 2 espacios iguales divididos con una rayita en los que aparece con forma de puntos una cifra de 0 o blanca hasta 6.</p>
-                        </div>
-                        <div class="service-btn rounded-0 rounded-bottom">
-                            <a class="text-primary fw-medium" href="">Leer mas<i
-                                    class="bi bi-chevron-double-right ms-2"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item position-relative h-100">
-                        <div class="service-text rounded p-5">
-                            <div class="btn-square bg-light rounded-circle mx-auto mb-4"
-                                style="width: 64px; height: 64px;">
-                                <img class="img-fluid" src="img/JuegosDeMesa/poker.webp" alt="Icon">
-                            </div>
-                            <h5 class="mb-3">Poker</h4>
-                                <p class="mb-0">Es un juego de apuestas en que los jugadores, con todas o parte de sus cartas ocultas, hacen apuestas sobre una puja inicial, recayendo la suma total de las apuestas en el jugador o jugadores con la mejor combinación de cartas.</p>
-                        </div>
-                        <div class="service-btn rounded-0 rounded-bottom">
-                            <a class="text-primary fw-medium" href="">Leer mas<i
-                                    class="bi bi-chevron-double-right ms-2"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item position-relative h-100">
-                        <div class="service-text rounded p-5">
-                            <div class="btn-square bg-light rounded-circle mx-auto mb-4"
-                                style="width: 64px; height: 64px;">
-                                <img class="img-fluid" src="img/JuegosDeMesa/risk.webp" alt="Icon">
-                            </div>
-                            <h5 class="mb-3">Risk</h4>
-                                <p class="mb-0">Es un juego de mesa estratégico donde los jugadores compiten por conquistar territorios y derrotar a sus oponentes mediante la gestión de sus ejércitos y la realización de ataques. El objetivo final es eliminar a todos los demás jugadores y controlar todo el mapa.</p>
-                        </div>
-                        <div class="service-btn rounded-0 rounded-bottom">
-                            <a class="text-primary fw-medium" href="">Leer mas<i
-                                    class="bi bi-chevron-double-right ms-2"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item position-relative h-100">
-                        <div class="service-text rounded p-5">
-                            <div class="btn-square bg-light rounded-circle mx-auto mb-4"
-                                style="width: 64px; height: 64px;">
-                                <img class="img-fluid" src="img/icon/icon-10.png" alt="Icon">
-                            </div>
-                            <h5 class="mb-3">Cluedo</h4>
-                                <p class="mb-0">Es un juego de mesa de misterio donde los jugadores deben resolver quién asesinó a un personaje, dónde y con qué arma, haciendo preguntas y deduciendo las pistas.</p>
+                            <h5 class="mb-3">{{juegos[0].nombre}}</h4>
+                                <p class="mb-0">{{juegos[0].descripcion}}</p>
                         </div>
                         <div class="service-btn rounded-0 rounded-bottom">
                             <a class="text-primary fw-medium" href="">Leer mas<i

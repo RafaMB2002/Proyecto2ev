@@ -8,6 +8,7 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 use Symfony\Component\Security\Http\Event\LogoutEvent;
+use Symfony\Component\Validator\Constraints\Time;
 
 class BlameableSubscriber implements EventSubscriberInterface
 {
@@ -28,13 +29,15 @@ class BlameableSubscriber implements EventSubscriberInterface
         $user = $this->userRepository->updateSession($user);
     }
 
-    public function onLogoutEvent(LogoutEvent $event): void
+    public function onLogoutEvent(): void
     {
         $user = $this->security->getUser();
         $actual = new DateTime();
         $timeSession = $user->getLastSession()->diff($actual);
-        dd($timeSession);
-        $user->setTimeLastSession($timeSession);
+        if ($timeSession != null) {
+            $user->setLastSessionTime($timeSession);
+        }
+        $this->userRepository->updateSession($user);
 
     }
 

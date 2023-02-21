@@ -1,0 +1,75 @@
+{# {% extends 'base.html.twig' %}
+
+{% block title %}Juego{% endblock %}
+
+{% block body %}
+    <h1>Juego</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ juego.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ juego.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Ancho</th>
+                <td>{{ juego.ancho }}</td>
+            </tr>
+            <tr>
+                <th>Alto</th>
+                <td>{{ juego.alto }}</td>
+            </tr>
+            <tr>
+                <th>Num_min_players</th>
+                <td>{{ juego.numMinPlayers }}</td>
+            </tr>
+            <tr>
+                <th>Num_max_players</th>
+                <td>{{ juego.numMaxPlayers }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_juego_crud_index') }}">back to list</a>
+
+    <a href="{{ path('app_juego_crud_edit', {'id': juego.id}) }}">edit</a>
+
+    {{ include('juego_crud/_delete_form.html.twig') }}
+{% endblock %} #}
+
+{% extends 'landing/landingPage.html.twig' %}
+ 
+{% block title %}Juegos{% endblock %}
+ 
+{% block body %}
+    <div class="container">
+        <h2 class="text-center mt-5 mb-3">Mostrar Juegos</h2>
+        <div class="card">
+            <div class="card-header">
+                <a class="btn btn-outline-info float-right" href="{{ path('app_juego_crud_index') }}"> 
+                    Ver todos los Juegos
+                </a>
+            </div>
+            <div class="card-body">
+                <b class="text-muted">Nombre:</b>
+                <p>{{ juego.nombre }}</p>
+                <b class="text-muted">Ancho:</b>
+                <p>{{ juego.ancho }}</p>
+                <b class="text-muted">Alto:</b>
+                <p>{{ juego.alto }}</p>
+                <b class="text-muted">Minimo de jugadores:</b>
+                <p>{{ juego.numMinPlayers }}</p>
+                <b class="text-muted">Maximo de jugadores:</b>
+                <p>{{ juego.numMaxPlayers }}</p>
+                <b class="text-muted">Descripcion:</b>
+                <p>{{ juego.descripcion }}</p>
+                <b class="text-muted">Imagen:</b>
+                <p>{{ juego.imagen }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

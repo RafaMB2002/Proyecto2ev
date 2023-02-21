@@ -47,12 +47,12 @@ class RegisterType extends AbstractType
             ])
             ->add('avatar', ChoiceType::class, [
                 'label' => 'Genero',
+                'mapped' => false,
                 'choices' => [
                     'Hombre' => 'perfil.png',
                     'Mujer' => 'mujer.png',
                     'Prefiero no decirlo' => 'user.png'
-                ],
-                'expanded' => true
+                ]
             ])
             ->add('acepto_los_terminos', CheckboxType::class, [
                 'mapped' => false,

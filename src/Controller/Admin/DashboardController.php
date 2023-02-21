@@ -71,7 +71,7 @@ class DashboardController extends AbstractDashboardController
 
             // you can return an URL with the avatar image
             //->setAvatarUrl('https://github.com/RafaMB2002/Proyecto2ev/blob/master/public/img/avatar/perfil.png')
-            //->setAvatarUrl($user->getAvatar())
+            ->setAvatarUrl("/img/avatar/".$user->getAvatar())
             // use this method if you don't want to display the user image
            // ->displayUserAvatar(false)
             // you can also pass an email address to use gravatar's service

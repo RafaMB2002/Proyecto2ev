@@ -1,0 +1,57 @@
+{% extends 'landing/landingPage.html.twig' %}
+ 
+{% block title %}Project index{% endblock %}
+ 
+{% block body %}
+    <div class="container">
+        <h2 class="text-center mt-5 mb-3">CRUD Juegos</h2>
+        <div class="card">
+            <div class="card-header">
+                <a class="btn btn-outline-primary" href="{{ path('app_juego_crud_new') }}"> 
+                    Crear Nuevo Juego
+                </a>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Anchura</th>
+                        <th>Altura</th>
+                        <th>Minimo de jugadores</th>
+                        <th>Maximo de jugadores</th>
+                        <th width="240px">Acciones</th>
+                    </tr>
+                    {% for juego in juegos %}
+                    <tr>
+                <td>{{ juego.id }}</td>
+                <td>{{ juego.nombre }}</td>
+                <td>{{ juego.ancho }}</td>
+                <td>{{ juego.alto }}</td>
+                <td>{{ juego.numMinPlayers }}</td>
+                <td>{{ juego.numMaxPlayers }}</td>
+                        <td>
+                            <form method="post" action="{{ path('app_juego_crud_delete', {'id': juego.id}) }}" onsubmit="return confirm('Estas seguro que quieres eliminar este juego?');">
+                                <a
+                                    class="btn btn-outline-info"
+                                    href="{{ path('app_juego_crud_show', {'id': juego.id}) }}">
+                                    Ver
+                                </a>
+                                <a
+                                    class="btn btn-outline-success"
+                                    href="{{ path('app_juego_crud_edit', {'id': juego.id}) }}">
+                                    Editar
+                                </a>
+ 
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ juego.id) }}">
+                                <button class="btn btn-outline-danger">Borrar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+ 
+{% endblock %}

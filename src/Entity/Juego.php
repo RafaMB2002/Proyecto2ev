@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\JuegoRepository;
+use DateTime;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: JuegoRepository::class)]
@@ -27,6 +29,12 @@ class Juego
 
     #[ORM\Column]
     private ?int $num_max_players = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $descripcion = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imagen = null;
 
     public function getId(): ?int
     {
@@ -89,6 +97,30 @@ class Juego
     public function setNumMaxPlayers(int $num_max_players): self
     {
         $this->num_max_players = $num_max_players;
+
+        return $this;
+    }
+
+    public function getDescripcion(): ?string
+    {
+        return $this->descripcion;
+    }
+
+    public function setDescripcion(?string $descripcion): self
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    public function getImagen(): ?string
+    {
+        return $this->imagen;
+    }
+
+    public function setImagen(?string $imagen): self
+    {
+        $this->imagen = $imagen;
 
         return $this;
     }

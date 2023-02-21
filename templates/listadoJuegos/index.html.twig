@@ -1,0 +1,34 @@
+{% extends 'landing/landingPage.html.twig' %}
+
+{% block body %}
+    <!-- Service Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <h1 class="display-5 mb-5">Listado de juegos</h1>
+            </div>
+            <div class="row g-4">
+                 {% for juego in juegos %}
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="service-item position-relative h-100">
+                        <div class="service-text rounded p-5">
+                            <div class="btn-square bg-light rounded-circle mx-auto mb-4"
+                                style="width: 64px; height: 64px;">
+                                <img class="img-fluid" src={{"img/juegosDeMesa/"~juego.imagen}} alt="Icon">
+                            </div>
+                            <h5 class="mb-3">{{juego.nombre}}</h4>
+                                <p class="mb-0">{{juego.descripcion}}</p>
+                        </div>
+                        <div class="service-btn rounded-0 rounded-bottom">
+                            <a class="text-primary fw-medium" href="">Leer mas<i
+                                    class="bi bi-chevron-double-right ms-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+                 {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- Service End -->
+   
+{% endblock %}

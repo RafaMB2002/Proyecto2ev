@@ -20,7 +20,7 @@ class UserCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        /* if(Crud::PAGE_EDIT == 'edit'){
+        if(Crud::PAGE_EDIT == $pageName){
             return [
                 IdField::new('id'),
                 TextField::new('nombre'),
@@ -28,7 +28,7 @@ class UserCrudController extends AbstractCrudController
                 TextField::new('email'),
                 ImageField::new('avatar')->setUploadDir('public\img\avatar')
             ];
-        } */
+        }
         return [
             IdField::new('id'),
             TextField::new('nombre'),

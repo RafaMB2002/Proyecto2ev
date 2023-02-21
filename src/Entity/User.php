@@ -46,8 +46,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $last_session = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $time_last_session = null;
+    #[ORM\Column(nullable: true)]
+    private ?\DateInterval $last_session_time = null;
 
     public function getId(): ?int
     {
@@ -195,14 +195,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getTimeLastSession(): ?\DateTimeInterface
+    public function getLastSessionTime(): ?\DateInterval
     {
-        return $this->time_last_session;
+        return $this->last_session_time;
     }
 
-    public function setTimeLastSession(?\DateTimeInterface $time_last_session): self
+    public function setLastSessionTime(?\DateInterval $last_session_time): self
     {
-        $this->time_last_session = $time_last_session;
+        $this->last_session_time = $last_session_time;
 
         return $this;
     }
