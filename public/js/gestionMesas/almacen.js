@@ -12,6 +12,7 @@ function droppableAlmacen() {
         method: "PUT",
         url: "/api/mesa/update/"+mesa[0].id,
         dataType: "json",
+        async: false,
         data: JSON.stringify(position)
       }).done(function () {
         location.reload();

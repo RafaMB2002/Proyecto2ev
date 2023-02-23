@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\JuegoRepository;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -35,6 +37,14 @@ class Juego
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imagen = null;
+
+    #[ORM\OneToMany(mappedBy: 'juego', targetEntity: Reserva::class, orphanRemoval: true)]
+    private Collection $reserva;
+
+    public function __construct()
+    {
+        $this->reserva = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -121,6 +131,36 @@ class Juego
     public function setImagen(?string $imagen): self
     {
         $this->imagen = $imagen;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reserva>
+     */
+    public function getReserva(): Collection
+    {
+        return $this->reserva;
+    }
+
+    public function addReserva(Reserva $reserva): self
+    {
+        if (!$this->reserva->contains($reserva)) {
+            $this->reserva->add($reserva);
+            $reserva->setJuego($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReserva(Reserva $reserva): self
+    {
+        if ($this->reserva->removeElement($reserva)) {
+            // set the owning side to null (unless already changed)
+            if ($reserva->getJuego() === $this) {
+                $reserva->setJuego(null);
+            }
+        }
 
         return $this;
     }

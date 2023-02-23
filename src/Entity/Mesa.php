@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MesaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MesaRepository::class)]
@@ -27,6 +29,14 @@ class Mesa
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $img = null;
+
+    #[ORM\OneToMany(mappedBy: 'mesa', targetEntity: reserva::class, orphanRemoval: true)]
+    private Collection $reserva;
+
+    public function __construct()
+    {
+        $this->reserva = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -100,6 +110,36 @@ class Mesa
     public function setImg(?string $img): self
     {
         $this->img = $img;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, reserva>
+     */
+    public function getReserva(): Collection
+    {
+        return $this->reserva;
+    }
+
+    public function addReserva(reserva $reserva): self
+    {
+        if (!$this->reserva->contains($reserva)) {
+            $this->reserva->add($reserva);
+            $reserva->setMesa($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReserva(reserva $reserva): self
+    {
+        if ($this->reserva->removeElement($reserva)) {
+            // set the owning side to null (unless already changed)
+            if ($reserva->getMesa() === $this) {
+                $reserva->setMesa(null);
+            }
+        }
 
         return $this;
     }

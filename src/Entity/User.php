@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -48,6 +50,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(nullable: true)]
     private ?\DateInterval $last_session_time = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: reserva::class, orphanRemoval: true)]
+    private Collection $reserva;
+
+    public function __construct()
+    {
+        $this->reserva = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -203,6 +213,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastSessionTime(?\DateInterval $last_session_time): self
     {
         $this->last_session_time = $last_session_time;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, reserva>
+     */
+    public function getReserva(): Collection
+    {
+        return $this->reserva;
+    }
+
+    public function addReserva(reserva $reserva): self
+    {
+        if (!$this->reserva->contains($reserva)) {
+            $this->reserva->add($reserva);
+            $reserva->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReserva(reserva $reserva): self
+    {
+        if ($this->reserva->removeElement($reserva)) {
+            // set the owning side to null (unless already changed)
+            if ($reserva->getUser() === $this) {
+                $reserva->setUser(null);
+            }
+        }
 
         return $this;
     }

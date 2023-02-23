@@ -26,6 +26,18 @@ class Reserva
     #[ORM\Column]
     private ?bool $presentado = null;
 
+    #[ORM\ManyToOne(inversedBy: 'reserva')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Mesa $mesa = null;
+
+    #[ORM\ManyToOne(inversedBy: 'reserva')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
+    #[ORM\ManyToOne(inversedBy: 'reserva')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Juego $juego = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +87,42 @@ class Reserva
     public function setPresentado(bool $presentado): self
     {
         $this->presentado = $presentado;
+
+        return $this;
+    }
+
+    public function getMesa(): ?Mesa
+    {
+        return $this->mesa;
+    }
+
+    public function setMesa(?Mesa $mesa): self
+    {
+        $this->mesa = $mesa;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getJuego(): ?Juego
+    {
+        return $this->juego;
+    }
+
+    public function setJuego(?Juego $juego): self
+    {
+        $this->juego = $juego;
 
         return $this;
     }

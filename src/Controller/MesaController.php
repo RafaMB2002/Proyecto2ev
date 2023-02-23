@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\MesaRepository;
-use PhpParser\Node\Stmt\TryCatch;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +20,8 @@ class MesaController
         $this->mesaRepository = $mesaRepository;
     }
 
-    #[Route('/add', name: 'add', methods: 'POST')]
+    //#[Security(is_garanted: 'ROLE_ADMIN')]
+    #[Route('/add', name: 'add', methods: 'POST',)]
     public function add(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -41,6 +42,8 @@ class MesaController
 
         return new JsonResponse($data, Response::HTTP_CREATED);
     }
+
+    //#[Security(is_garanted: 'ROLE_ADMIN')]
     #[Route('/get/{id}', name: 'get_one', methods: 'GET')]
     public function get($id): JsonResponse
     {
@@ -94,6 +97,7 @@ class MesaController
         return new JsonResponse($data, Response::HTTP_OK);
     }
 
+   // #[Security(is_garanted: 'ROLE_ADMIN')]
     #[Route("/update/{id}", name: "update", methods: "PUT")]
     public function update($id, Request $request): JsonResponse
     {
@@ -115,6 +119,7 @@ class MesaController
         return new JsonResponse($data, Response::HTTP_OK);
     }
 
+    //#[Security(is_garanted: 'ROLE_ADMIN')]
     #[Route("/delete/{id}", name: "delete", methods: "DELETE")]
     public function delete($id): JsonResponse
     {

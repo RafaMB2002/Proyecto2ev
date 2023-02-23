@@ -63,6 +63,7 @@ function obtenerMesas() {
     method: "GET",
     url: "/api/mesa/getAll",
     dataType: "json",
+    async: false,
   }).done(function (data) {
     $.each(data, function (key, mesa) {
       newMesa(
