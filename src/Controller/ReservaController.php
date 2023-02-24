@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\JuegoRepository;
 use App\Repository\MesaRepository;
 use App\Repository\ReservaRepository;
+use App\Repository\TramoRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,13 +21,15 @@ class ReservaController
     private $mesaRepository;
     private $userRepository;
     private $juegoRepository;
+    private $tramoRepository;
 
-    public function __construct(ReservaRepository $reservaRepository, MesaRepository $mesaRepository, UserRepository $userRepository, JuegoRepository $juegoRepository)
+    public function __construct(ReservaRepository $reservaRepository, MesaRepository $mesaRepository, UserRepository $userRepository, JuegoRepository $juegoRepository, TramoRepository $tramoRepository)
     {
         $this->reservaRepository = $reservaRepository;
         $this->mesaRepository = $mesaRepository;
         $this->userRepository = $userRepository;
         $this->juegoRepository = $juegoRepository;
+        $this->tramoRepository = $tramoRepository;
     }
 
     //#[Security(is_garanted: 'ROLE_ADMIN')]
@@ -42,12 +45,13 @@ class ReservaController
         $mesaId = $data['mesa_id'];
         $userId = $data['user_id'];
         $juegoId = $data['juego_id'];
+        $tramoId = $data['tramo_id'];
 
-        if (empty($fechaInicio) || empty($fechaFin) || empty($fechaCancelacion) || empty($presentado) || empty($mesaId) || empty($userId) || empty($juegoId)) {
+        if (empty($fechaInicio) || empty($fechaFin) || empty($fechaCancelacion) || empty($presentado) || empty($mesaId) || empty($userId) || empty($juegoId) || empty($tramoId)) {
             throw new NotFoundHttpException('Esperando parametros obligatorios!');
         }
 
-        $reserva = $this->reservaRepository->saveReserva($fechaInicio, $fechaFin, $fechaCancelacion, $presentado, $mesaId, $userId, $juegoId);
+        $reserva = $this->reservaRepository->saveReserva($fechaInicio, $fechaFin, $fechaCancelacion, $presentado, $mesaId, $userId, $juegoId, $tramoId);
 
         $data = [
             'status' => true,
@@ -76,6 +80,7 @@ class ReservaController
                     'mesa_id' => $reserva->getMesa()->getId(),
                     'user_id' => $reserva->getUser()->getId(),
                     'juego_id' => $reserva->getJuego()->getId(),
+                    'tramo_id' => $reserva->getTramo()->getId(),
                 ]
             ];
             $response = new JsonResponse($data, Response::HTTP_OK);
@@ -110,6 +115,7 @@ class ReservaController
                     'mesa_id' => $reserva->getMesa()->getId(),
                     'user_id' => $reserva->getUser()->getId(),
                     'juego_id' => $reserva->getJuego()->getId(),
+                    'tramo_id' => $reserva->getTramo()->getId()
                 ]
             ];
         }
@@ -131,6 +137,7 @@ class ReservaController
         empty($data['mesa_id']) ? true : $reserva->setMesa($this->mesaRepository->findOneBy(['id' => $data['mesa_id']]));
         empty($data['user_id']) ? true : $reserva->setUser($this->userRepository->findOneBy(['id' => $data['user_id']]));
         empty($data['juego_id']) ? true : $reserva->setJuego($this->juegoRepository->findOneBy(['id' => $data['juego_id']]));
+        empty($data['tramo_id']) ? true : $reserva->setTramo($this->tramoRepository->findOneBy(['id' => $data['tramo_id']]));
 
         $updatedReserva = $this->reservaRepository->updateReserva($reserva);
 

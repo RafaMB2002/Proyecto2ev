@@ -21,13 +21,15 @@ class ReservaRepository extends ServiceEntityRepository
     private $mesaRepository;
     private $userRepository;
     private $juegoRepository;
+    private $tramoRepository;
     private $manager;
-    public function __construct(ManagerRegistry $registry, MesaRepository $mesaRepository, UserRepository $userRepository, JuegoRepository $juegoRepository, EntityManagerInterface $manager)
+    public function __construct(ManagerRegistry $registry, MesaRepository $mesaRepository, UserRepository $userRepository, JuegoRepository $juegoRepository, TramoRepository $tramoRepository, EntityManagerInterface $manager)
     {
         parent::__construct($registry, Reserva::class);
         $this->mesaRepository = $mesaRepository;
         $this->userRepository = $userRepository;
         $this->juegoRepository = $juegoRepository;
+        $this->tramoRepository = $tramoRepository;
         $this->manager = $manager;
     }
 
@@ -49,7 +51,7 @@ class ReservaRepository extends ServiceEntityRepository
         }
     }
 
-    public function saveReserva($fechaInicio, $fechaFin, $fechaCancelacion, $presentado, $mesaId, $userId, $juegoId)
+    public function saveReserva($fechaInicio, $fechaFin, $fechaCancelacion, $presentado, $mesaId, $userId, $juegoId, $tramoId)
     {
         $newReserva = new Reserva();
 
@@ -60,7 +62,8 @@ class ReservaRepository extends ServiceEntityRepository
             ->setPresentado($presentado)
             ->setMesa($this->mesaRepository->findOneBy(['id' => $mesaId]))
             ->setUser($this->userRepository->findOneBy(['id' => $userId]))
-            ->setJuego($this->juegoRepository->findOneBy(['id' => $juegoId]));
+            ->setJuego($this->juegoRepository->findOneBy(['id' => $juegoId]))
+            ->setTramo($this->tramoRepository->findOneBy(['id' => $tramoId]));
 
         $this->manager->persist($newReserva);
         $this->manager->flush();

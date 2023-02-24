@@ -38,6 +38,10 @@ class Reserva
     #[ORM\JoinColumn(nullable: false)]
     private ?Juego $juego = null;
 
+    #[ORM\ManyToOne(inversedBy: 'relation')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Tramo $tramo = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -127,17 +131,30 @@ class Reserva
         return $this;
     }
 
-    public function toArray() 
-{ 
-    return [ 
-        'id' => $this->getId(), 
-        'fecha_inicio' => $this->getFechaInicio(), 
-        'fecha_fin' => $this->getFechaFin(), 
-        'fecha_cancelacion' => $this->getFechaCancelacion(), 
-        'presentado' => $this->isPresentado(),
-        'mesa_id' => $this->getMesa()->getId(),
-        'user_id' => $this->getUser()->getId(),
-        'juego_id' => $this->getJuego()->getId()
-    ]; 
-}
+    public function getTramo(): ?Tramo
+    {
+        return $this->tramo;
+    }
+
+    public function setTramo(?Tramo $tramo): self
+    {
+        $this->tramo = $tramo;
+
+        return $this;
+    }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'fecha_inicio' => $this->getFechaInicio(),
+            'fecha_fin' => $this->getFechaFin(),
+            'fecha_cancelacion' => $this->getFechaCancelacion(),
+            'presentado' => $this->isPresentado(),
+            'mesa_id' => $this->getMesa()->getId(),
+            'user_id' => $this->getUser()->getId(),
+            'juego_id' => $this->getJuego()->getId(),
+            'tramo_id' => $this->getTramo()->getId()
+        ];
+    }
 }
