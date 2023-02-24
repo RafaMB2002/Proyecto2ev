@@ -46,11 +46,42 @@ function newMesaReserva(id, anchura, altura, x, y) {
 
 function mostrarReservas() {}
 
+function obtenerTramos() {
+  $.ajax({
+    method: "GET",
+    url: "/api/tramo/getAll",
+    dataType: "json",
+    async: false,
+  }).done(function (data) {
+    $.each(data, function (key, tramo) {
+      var tramoInicio = tramo.object.inicio.date;
+      tramoInicio = tramoInicio.split(" ")[1];
+      tramoInicio = tramoInicio.substr(0, 8);
+      tramoInicio = $.trim(tramoInicio);
+
+      var tramoFin = tramo.object.fin.date;
+      tramoFin = tramoFin.split(" ")[1];
+      tramoFin = tramoFin.substr(0, 8);
+      tramoFin = $.trim(tramoFin);
+
+      var idTramo = tramo.object.id;
+
+      $("<option>")
+        .html(tramoInicio + " - " + tramoFin)
+        .attr("id", idTramo)
+        .appendTo($("#tramosReservas"));
+    });
+  });
+}
+
 $("document").ready(function () {
-  $("#datepicker").datepicker();
-  obtenerMesasReservas();
+  obtenerTramos();
+  $("#botonReservas").click(function () {
+    obtenerMesasReservas();
+  });
+  /* 
   $(".mesa").click(function (ev) {
     //console.log(ev.target);
     mostrarReservas();
-  });
+  }); */
 });
