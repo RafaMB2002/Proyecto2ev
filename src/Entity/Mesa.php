@@ -30,7 +30,7 @@ class Mesa
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $img = null;
 
-    #[ORM\OneToMany(mappedBy: 'mesa', targetEntity: reserva::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'mesa', targetEntity: Reserva::class, orphanRemoval: true)]
     private Collection $reserva;
 
     public function __construct()
@@ -122,7 +122,7 @@ class Mesa
         return $this->reserva;
     }
 
-    public function addReserva(reserva $reserva): self
+    public function addReserva(Reserva $reserva): self
     {
         if (!$this->reserva->contains($reserva)) {
             $this->reserva->add($reserva);
@@ -132,7 +132,7 @@ class Mesa
         return $this;
     }
 
-    public function removeReserva(reserva $reserva): self
+    public function removeReserva(Reserva $reserva): self
     {
         if ($this->reserva->removeElement($reserva)) {
             // set the owning side to null (unless already changed)

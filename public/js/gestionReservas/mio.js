@@ -44,13 +44,13 @@ function newMesaReserva(id, anchura, altura, x, y) {
   }
 }
 
-function mostrarReservas() {
-  
-}
+function mostrarReservas() {}
 
 $("document").ready(function () {
+  $("#datepicker").datepicker();
   obtenerMesasReservas();
   $(".mesa").click(function (ev) {
-    console.log(ev.target);
+    //console.log(ev.target);
+    mostrarReservas();
   });
 });

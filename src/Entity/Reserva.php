@@ -126,4 +126,18 @@ class Reserva
 
         return $this;
     }
+
+    public function toArray() 
+{ 
+    return [ 
+        'id' => $this->getId(), 
+        'fecha_inicio' => $this->getFechaInicio(), 
+        'fecha_fin' => $this->getFechaFin(), 
+        'fecha_cancelacion' => $this->getFechaCancelacion(), 
+        'presentado' => $this->isPresentado(),
+        'mesa_id' => $this->getMesa()->getId(),
+        'user_id' => $this->getUser()->getId(),
+        'juego_id' => $this->getJuego()->getId()
+    ]; 
+}
 }

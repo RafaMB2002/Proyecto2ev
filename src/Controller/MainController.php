@@ -38,7 +38,9 @@ class MainController extends AbstractController
     public function reservarMesa(UserInterface $user, RedirectController $redirectController, Request $request)
     {
 
-        if ($user->getRoles() == ['ROLE_USER'] || $user->getRoles() == ['ROLE_ADMIN']) {
+        $roles = $user->getRoles();
+        
+        if (in_array('ROLE_ADMIN', $roles) || in_array('ROLE_USER', $roles)) {
             return $this->render('gestionReservas/index.html.twig');
         } else {
             return $redirectController->redirectAction($request, 'app_login');

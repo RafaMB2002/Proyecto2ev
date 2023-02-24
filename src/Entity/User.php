@@ -51,7 +51,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?\DateInterval $last_session_time = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: reserva::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Reserva::class, orphanRemoval: true)]
     private Collection $reserva;
 
     public function __construct()
@@ -225,7 +225,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->reserva;
     }
 
-    public function addReserva(reserva $reserva): self
+    public function addReserva(Reserva $reserva): self
     {
         if (!$this->reserva->contains($reserva)) {
             $this->reserva->add($reserva);
@@ -235,7 +235,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeReserva(reserva $reserva): self
+    public function removeReserva(Reserva $reserva): self
     {
         if ($this->reserva->removeElement($reserva)) {
             // set the owning side to null (unless already changed)
