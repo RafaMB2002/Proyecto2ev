@@ -68,10 +68,14 @@
                             <a href="{{absolute_url(path('app_juego_crud_index'))}}" class="nav-item nav-link">Gestion de juegos</a>
                         {% endif %}
                         {% if is_granted('ROLE_ADMIN')%}
+                        <a href="{{absolute_url(path('app_form_new_evento'))}}" class="nav-item nav-link">Gestion de evento</a>
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN')%}
                             <a href="/admin" class="nav-item nav-link">CRUD</a>
                         {% endif %}
                         <a href="{{absolute_url(path('listado_juegos'))}}" class="nav-item nav-link">Listado de Juegos</a>
                         <a href="{{absolute_url(path('reservar_mesa'))}}" class="nav-item nav-link">Reservar mesa</a>
+                        
                         
                     </div>
                     <div class="ms-auto d-none d-lg-block">
