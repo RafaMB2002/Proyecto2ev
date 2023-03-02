@@ -20,7 +20,7 @@ class EventoFormController extends AbstractController
     }
 
     #[Route('/eventoForm/new', name: 'app_form_new_evento')]
-    public function metodoNewMesa(Request $request): Response
+    public function metodoNewEvento(Request $request): Response
     {
         $evento = new Evento();
 

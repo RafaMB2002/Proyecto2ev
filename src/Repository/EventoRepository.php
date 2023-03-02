@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Evento;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -16,9 +17,13 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class EventoRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+
+    private $manager;
+
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $manager)
     {
         parent::__construct($registry, Evento::class);
+        $this->manager = $manager;
     }
 
     public function save(Evento $entity, bool $flush = false): void
@@ -37,6 +42,22 @@ class EventoRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function saveEvento($evento)
+    {
+        $newEvento = new Evento();
+
+        $newEvento
+            ->setJuego($evento->getJuego())
+            ->setFechaHora($evento->getFechaHora())
+            ->setEditorial($evento->getEditorial())
+            ->setNumSocios($evento->getNumSocios());
+
+        $this->manager->persist($newEvento);
+        $this->manager->flush();
+
+        return $newEvento;
     }
 
 //    /**
