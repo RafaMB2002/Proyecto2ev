@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Mesa;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -71,6 +72,18 @@ class MesaRepository extends ServiceEntityRepository
     {
         $this->manager->remove($mesa);
         $this->manager->flush();
+    }
+
+    public function getAllReservaFecha(DateTime $fecha)
+    {
+        //dd($fecha->format('Y-m-d H:i:s'));
+        $f = $fecha->format('Y-m-d H:i:s');
+        $conec = $this->getEntityManager()->getConnection();
+        $sql = "select mesa.* from mesa join reserva on reserva.mesa_id=mesa.id where reserva.fecha_inicio = '$f'";
+        $statement = $conec->prepare($sql);
+        $resulSet = $statement->executeQuery()->fetchAllAssociative();
+        //dd($resulSet);
+        return $resulSet;
     }
 
     //    /**

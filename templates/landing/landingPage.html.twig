@@ -68,7 +68,14 @@
                             <a href="{{absolute_url(path('app_juego_crud_index'))}}" class="nav-item nav-link">Gestion de juegos</a>
                         {% endif %}
                         {% if is_granted('ROLE_ADMIN')%}
-                        <a href="{{absolute_url(path('app_form_new_evento'))}}" class="nav-item nav-link">Gestion de evento</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Eventos</a>
+                            <div class="dropdown-menu bg-light rounded-0 rounded-bottom m-0">
+                                <a href="{{absolute_url(path('app_form_new_evento'))}}" class="dropdown-item">Crear Evento</a>
+                                <a href="{{absolute_url(path('app_invitacion_form_builder'))}}" class="dropdown-item">Invitaciones</a>
+                            </div>
+                        </div>
+                        {# <a href="{{absolute_url(path('app_form_new_evento'))}}" class="nav-item nav-link">Gestion de evento</a> #}
                         {% endif %}
                         {% if is_granted('ROLE_ADMIN')%}
                             <a href="/admin" class="nav-item nav-link">CRUD</a>

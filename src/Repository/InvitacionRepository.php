@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Invitacion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -16,9 +17,12 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class InvitacionRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $manager;
+
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $manager)
     {
         parent::__construct($registry, Invitacion::class);
+        $this->manager = $manager;
     }
 
     public function save(Invitacion $entity, bool $flush = false): void
@@ -39,28 +43,43 @@ class InvitacionRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Invitacion[] Returns an array of Invitacion objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('i.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function saveInvitacion($evento, $usuario, $presentado = 0)
+    {
+        //dd(var_dump($invitacion));
+        $newInvitacion = new Invitacion();
 
-//    public function findOneBySomeField($value): ?Invitacion
-//    {
-//        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $newInvitacion
+            ->setEvento($evento)
+            ->setUsuario($usuario)
+            ->setPresentado($presentado);
+
+        $this->manager->persist($newInvitacion);
+        $this->manager->flush();
+
+        return $newInvitacion;
+    }
+
+    /**
+     * @return Invitacion[] Returns an array of Invitacion objects
+     */
+    public function findByExampleField($evento): array
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.evento = :val')
+            ->setParameter('val', $evento)
+            ->orderBy('i.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    //    public function findOneBySomeField($value): ?Invitacion
+    //    {
+    //        return $this->createQueryBuilder('i')
+    //            ->andWhere('i.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

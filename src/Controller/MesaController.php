@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\MesaRepository;
+use DateTime;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -126,6 +127,28 @@ class MesaController
 
         $this->mesaRepository->removeMesa($mesa);
         $data = ["result" => true];
+        return new JsonResponse($data, Response::HTTP_OK);
+    }
+
+    #[Route("/getAllmesaReservaFecha/{fecha}", name: "get_all_reserva_fecha", methods: "GET")]
+    public function getAllReservaFecha($fecha): JsonResponse
+    {
+        $mesas = $this->mesaRepository->getAllReservaFecha(new DateTime($fecha));
+        $data = [];
+
+        foreach ($mesas as $mesa) {
+            $data[] = [
+                'result' => true,
+                'object' => [
+                    'id' => $mesa['id'],
+                    'anchura' => $mesa['anchura'],
+                    'altura' => $mesa['altura'],
+                    'x' => $mesa['x'],
+                    'y' => $mesa['y'],
+                ]
+            ];
+        }
+
         return new JsonResponse($data, Response::HTTP_OK);
     }
 }
