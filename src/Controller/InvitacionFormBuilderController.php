@@ -6,7 +6,9 @@ use App\Entity\Evento;
 use App\Entity\User;
 use App\Repository\EventoRepository;
 use App\Repository\InvitacionRepository;
+use App\Repository\JuegoRepository;
 use App\Repository\UserRepository;
+use App\Service\MailGenerator;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -23,12 +25,16 @@ class InvitacionFormBuilderController extends AbstractController
     private $invitacionRepository;
     private $eventoRepository;
     private $userRepository;
+    private $mailGenerator;
+    private $juegoRepository;
 
-    public function __construct(InvitacionRepository $invitacionRepository, EventoRepository $eventoRepository, UserRepository $userRepository)
+    public function __construct(InvitacionRepository $invitacionRepository, EventoRepository $eventoRepository, UserRepository $userRepository, JuegoRepository $juegoRepository, MailGenerator $mailGenerator)
     {
         $this->invitacionRepository = $invitacionRepository;
         $this->eventoRepository = $eventoRepository;
         $this->userRepository = $userRepository;
+        $this->mailGenerator = $mailGenerator;
+        $this->juegoRepository = $juegoRepository;
     }
     #[Route('/invitacion/form/builder', name: 'app_invitacion_form_builder')]
     public function newFormInvitacion(Request $request): Response
@@ -63,11 +69,12 @@ class InvitacionFormBuilderController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $invitacion = $form->getData();
-            //dd($invitacion['usuario']);
-            for ($i=0; $i < count($invitacion['usuario']); $i++) { 
+            //dd();
+            for ($i = 0; $i < count($invitacion['usuario']); $i++) {
                 $this->invitacionRepository->saveInvitacion($invitacion['Evento'], $invitacion['usuario'][$i], $invitacion['Presentado']);
+                $this->mailGenerator->sendEmail($invitacion['usuario'][$i]->getEmail(), 'Estas invitado al evento de la editorial: ' . $invitacion['Evento']->getEditorial() . ' para presentar el nuevo juego de mesa: ' . $this->juegoRepository->findOneBy(['id' => $invitacion['Evento']->getJuego()->getId()])->getNombre(), 'Evento Juego de mesa');
             }
-            
+
             return $this->redirectToRoute('landing_page');
         }
 

@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\InvitacionRepository;
+use App\Service\MailGenerator;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Contracts\EventDispatcher\Event;
 
 #[ORM\Entity(repositoryClass: InvitacionRepository::class)]
 class Invitacion
@@ -64,4 +67,9 @@ class Invitacion
 
         return $this;
     }
+    
+    /* #[ORM\PostPersist]
+    public function invitacionCreated(MailGenerator $mailGenerator){
+        $mailGenerator->sendEmail('','Hola','Invitacion a evento de Juego de mesa');
+    } */
 }

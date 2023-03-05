@@ -17,6 +17,19 @@ function obtenerMesasReservas() {
   });
 }
 
+function obtenerReservas() {
+  $.ajax({
+    method: "GET",
+    url: "/api/reserva/getAll",
+    dataType: "json",
+    async: false,
+  }).done(function (data) {
+    $.each(data, function (key, reserva) {
+      console.log(reserva)
+    });
+  });
+}
+
 function newMesaReserva(id, anchura, altura, x, y) {
   var topSala = $("#salaReservas").offset().top;
   var leftSala = $("#salaReservas").offset().left;
@@ -44,7 +57,7 @@ function newMesaReserva(id, anchura, altura, x, y) {
   }
 }
 
-function mostrarReservas() {}
+function mostrarReservas() { }
 
 function obtenerTramos() {
   $.ajax({
@@ -75,9 +88,29 @@ function obtenerTramos() {
 }
 
 $("document").ready(function () {
+  $(function () {
+    $("#datepicker").datepicker({
+      closeText: 'Cerrar',
+      prevText: '< Ant',
+      nextText: 'Sig >',
+      currentText: 'Hoy',
+      monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+      monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+      dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+      dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+      dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+      weekHeader: 'Sm',
+      dateFormat: 'dd/mm/yy',
+      firstDay: 1,
+      isRTL: false,
+      showMonthAfterYear: false,
+      yearSuffix: ''
+    });
+  });
   obtenerTramos();
   $("#botonReservas").click(function () {
     obtenerMesasReservas();
+    obtenerReservas();
   });
   /* 
   $(".mesa").click(function (ev) {
