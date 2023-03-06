@@ -5,7 +5,9 @@ namespace App\Service;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Part\DataPart;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mime\Part\File;
 
 class MailGenerator
 {
@@ -14,7 +16,7 @@ class MailGenerator
     {
         $this->mailer = $mailer;
     }
-    public function sendEmail($destinatario, $mensaje, $asunto = ''):bool
+    public function sendEmail($destinatario, $mensaje, $asunto = '', $archivo = ''):bool
     {
         $email = (new Email())
             ->from('correossymfuent@gmail.com')
@@ -23,6 +25,7 @@ class MailGenerator
             //->bcc('bcc@example.com')
             //->replyTo('fabien@example.com')
             //->priority(Email::PRIORITY_HIGH)
+            ->addPart(new DataPart(new File($archivo)))
             ->subject($asunto)
             //->text('Sending emails is fun again!')
             ->html($mensaje);

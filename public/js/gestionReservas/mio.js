@@ -112,9 +112,11 @@ $("document").ready(function () {
     obtenerMesasReservas();
     obtenerReservas();
   });
-  /* 
   $(".mesa").click(function (ev) {
-    //console.log(ev.target);
+    console.log(ev.target);
     mostrarReservas();
-  }); */
+  });
+  $("#btnModal").click(function(){
+    $("#miModal").modal()
+  })
 });

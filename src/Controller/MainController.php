@@ -15,6 +15,7 @@ class MainController extends AbstractController
     #[Route('/', name: 'landing_page')]
     public function landing(JuegoRepository $juegoRepository): Response
     {
+        //phpinfo();
         return $this->render('landing/landingPage.html.twig', [
             'juegos' => $juegoRepository->findAll(),
         ]);
