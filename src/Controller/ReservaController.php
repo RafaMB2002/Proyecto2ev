@@ -39,17 +39,17 @@ class ReservaController
         $data = json_decode($request->getContent(), true);
 
         $fechaInicio = $data['fecha_inicio'];
-        $fechaFin = $data['fecha_fin'];
-        $fechaCancelacion = $data['fecha_cancelacion'];
-        $presentado = $data['presentado'];
+        $fechaFin = "00-00-0000 00:00:00";
+        $fechaCancelacion = "00-00-0000 00:00:00";
+        $presentado = false;
         $mesaId = $data['mesa_id'];
         $userId = $data['user_id'];
         $juegoId = $data['juego_id'];
         $tramoId = $data['tramo_id'];
 
-        if (empty($fechaInicio) || empty($fechaFin) || empty($fechaCancelacion) || empty($presentado) || empty($mesaId) || empty($userId) || empty($juegoId) || empty($tramoId)) {
+        /* if (empty($fechaInicio) || empty($fechaFin) || empty($fechaCancelacion) || empty($presentado) || empty($mesaId) || empty($userId) || empty($juegoId) || empty($tramoId)) {
             throw new NotFoundHttpException('Esperando parametros obligatorios!');
-        }
+        } */
 
         $reserva = $this->reservaRepository->saveReserva($fechaInicio, $fechaFin, $fechaCancelacion, $presentado, $mesaId, $userId, $juegoId, $tramoId);
 

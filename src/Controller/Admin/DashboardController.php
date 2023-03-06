@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Evento;
 use App\Entity\Juego;
 use App\Entity\Mesa;
 use App\Entity\Reserva;
@@ -55,6 +56,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Mesa', 'fa-solid fa-circle', Mesa::class);
         yield MenuItem::linkToCrud('Juego', 'fa-solid fa-chess-knight', Juego::class);
         yield MenuItem::linkToCrud('Reserva', 'fas fa-sticky-note', Reserva::class);
+        //yield MenuItem::linkToCrud('Evento', 'fas fa-sticky-note', Evento::class);
         
     }
 

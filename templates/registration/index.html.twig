@@ -32,7 +32,7 @@
     <!-- Topbar End -->
 {% endblock %}
 {% block body %}
-    <div class="container p-2">
+    {# <div class="container p-2">
         <div class="card">
         <div class="card-header text-center">
                 <h3>Registro</h3>
@@ -97,9 +97,12 @@
         </div>
 
     </form>
-        </div>
+        </div> #}
     
-    {# {{ form(form) }} #}
+    {{ form(form) }}
+    {% if error %}
+            <div>Correo o contraseña incorrecta{# {{ error.messageKey|trans(error.messageData, 'security') }} #}</div>
+        {% endif %}
 {% endblock %}
 
 {% block footer %}

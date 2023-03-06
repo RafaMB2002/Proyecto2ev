@@ -97,7 +97,7 @@ class MesaController
         return new JsonResponse($data, Response::HTTP_OK);
     }
 
-   // #[Security(is_garanted: 'ROLE_ADMIN')]
+    // #[Security(is_garanted: 'ROLE_ADMIN')]
     #[Route("/update/{id}", name: "update", methods: "PUT")]
     public function update($id, Request $request): JsonResponse
     {
@@ -147,6 +147,34 @@ class MesaController
                     'y' => $mesa['y'],
                 ]
             ];
+        }
+
+        return new JsonResponse($data, Response::HTTP_OK);
+    }
+
+    #[Route("/getAllMesaFiltros", name: "get_all_mesa_filtros", methods: "POST")]
+    public function getAllMesaFiltros(Request $request): JsonResponse
+    {
+
+        $data = json_decode($request->getContent(), true);
+        $mesas = $this->mesaRepository->getAllMesaFiltros(new DateTime($data['fecha']), $data['tramo'], $data['juego']);
+        $data = [];
+
+        foreach ($mesas as $mesa) {
+            $data[] = [
+                'result' => true,
+                'object' => [
+                    'id' => $mesa['id'],
+                    'anchura' => $mesa['anchura'],
+                    'altura' => $mesa['altura'],
+                    'x' => $mesa['x'],
+                    'y' => $mesa['y'],
+                ]
+            ];
+        }
+
+        if ($mesas == []) {
+            $data = -1;
         }
 
         return new JsonResponse($data, Response::HTTP_OK);

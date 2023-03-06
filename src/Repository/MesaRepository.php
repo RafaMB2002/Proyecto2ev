@@ -86,6 +86,18 @@ class MesaRepository extends ServiceEntityRepository
         return $resulSet;
     }
 
+    public function getAllMesaFiltros($fecha, $tramo, $juego){
+        $fecha = $fecha->format('Y-m-d H:i:s');
+        $tramo = $tramo;
+        $juego = $juego;
+        $conec = $this->getEntityManager()->getConnection();
+        $sql = "select mesa.* from mesa join reserva on reserva.mesa_id=mesa.id join  tramo on reserva.tramo_id=tramo.id join juego on reserva.juego_id=juego.id WHERE fecha_inicio = '$fecha' AND tramo.id = '$tramo' AND juego.id = '$juego'";
+        $statement = $conec->prepare($sql);
+        $resulSet = $statement->executeQuery()->fetchAllAssociative();
+
+        return $resulSet;
+    }
+
     //    /**
     //     * @return Mesa[] Returns an array of Mesa objects
     //     */
