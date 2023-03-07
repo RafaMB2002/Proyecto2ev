@@ -25,9 +25,8 @@
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <div class="ms-auto d-flex align-items-center">
                         <small class="ms-4">{{app.user.nombre}}</small>
-                        <a class="btn btn-sm-square btn-light text-primary rounded-circle ms-2" href=""><img src="/img/avatar/{{app.user.avatar}}" style="width:40px"></a>
-                    </div>
-                            
+                        <a class="btn btn-sm-square btn-light text-primary rounded-circle ms-2 " href="{{absolute_url(path('edit_profile'))}}"><img src="/img/avatar/{{app.user.avatar}}" style="width:40px"></a>
+                    </div>   
                         {% endif %}
                 </div>
             </div>
@@ -45,6 +44,20 @@
                     data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <div class="navbar-toggler me-0">
+                    <div class="d-lg-block">
+                    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                                <a href="{{absolute_url(path('app_login'))}}" class="btn btn-primary rounded-pill py-2 px-3">Iniciar sesion</a>
+                            {% endif %}
+                            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                                <a href="{{absolute_url(path('app_register'))}}" class="btn btn-primary rounded-pill py-2 px-3">Registrarse</a>
+                            {% endif %}
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                <a href="/logout" class="btn btn-primary rounded-pill py-2 px-3">Cerrar sesion</a>
+                            {% endif %}
+                    </div>
+                            
+                </div>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav">
                         {# <div class="nav-item dropdown">
@@ -57,9 +70,9 @@
                                 <a href="404.html" class="dropdown-item">404 Page</a>
                             </div>
                         </div> #}
-                        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                        {# {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
                             <a href="" class="nav-item nav-link">Quienes somos</a>
-                        {% endif %}
+                        {% endif %} #}
                         
                         {% if is_granted('ROLE_ADMIN')%}
                             <a href="{{absolute_url(path('gestion_mesas'))}}" class="nav-item nav-link">Gestion de mesas</a>
@@ -81,7 +94,16 @@
                             <a href="/admin" class="nav-item nav-link">CRUD</a>
                         {% endif %}
                         <a href="{{absolute_url(path('listado_juegos'))}}" class="nav-item nav-link">Listado de Juegos</a>
-                        <a href="{{absolute_url(path('reservar_mesa'))}}" class="nav-item nav-link">Reservar mesa</a>
+                        {# <a href="{{absolute_url(path('reservar_mesa'))}}" class="nav-item nav-link">Reservar mesa</a> #}
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Reservas</a>
+                            <div class="dropdown-menu bg-light rounded-0 rounded-bottom m-0">
+                                <a href="{{absolute_url(path('reservar_mesa'))}}" class="dropdown-item">Reservar</a>
+                                <a href="{{absolute_url(path('app_gestion_reservas'))}}" class="dropdown-item">Gestionar reserva</a>
+                            </div>
+                        </div>
+                        {% endif %}
                         
                         
                     </div>
@@ -132,8 +154,8 @@
                                         <strong>Xokas y Cia</strong>
                                     </p>
                                     <h1 class="display-1 text-white mb-4 animated slideInRight">La diversion esta garantizada</h1>
-                                    <a href=""
-                                        class="btn btn-primary rounded-pill py-3 px-5 animated slideInRight">Explorar mas</a>
+                                    {# <a href=""
+                                        class="btn btn-primary rounded-pill py-3 px-5 animated slideInRight">Explorar mas</a> #}
                                 </div>
                             </div>
                         </div>
@@ -148,8 +170,8 @@
                                     <p class="fs-4 text-white animated slideInLeft">Bienvenido a <strong>Xokas y Cia</strong>
                                     </p>
                                     <h1 class="display-1 text-white mb-5 animated slideInLeft">Entra y descubre el mundo del juego de mesa</h1>
-                                    <a href=""
-                                        class="btn btn-primary rounded-pill py-3 px-5 animated slideInLeft">Explorar mas</a>
+                                    {# <a href=""
+                                        class="btn btn-primary rounded-pill py-3 px-5 animated slideInLeft">Explorar mas</a> #}
                                 </div>
                             </div>
                         </div>
@@ -294,10 +316,10 @@
                             <h5 class="mb-3">{{juegos[1].nombre}}</h4>
                                 <p class="mb-0">{{juegos[1].descripcion}}</p>
                         </div>
-                        <div class="service-btn rounded-0 rounded-bottom">
+                        {# <div class="service-btn rounded-0 rounded-bottom">
                             <a class="text-primary fw-medium" href="">Leer mas<i
                                     class="bi bi-chevron-double-right ms-2"></i></a>
-                        </div>
+                        </div> #}
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
@@ -310,10 +332,10 @@
                             <h5 class="mb-3">{{juegos[2].nombre}}</h4>
                                 <p class="mb-0">{{juegos[2].descripcion}}</p>
                         </div>
-                        <div class="service-btn rounded-0 rounded-bottom">
+                        {# <div class="service-btn rounded-0 rounded-bottom">
                             <button class="text-primary fw-medium border-0 bg-transparent">Leer mas<i
                                     class="bi bi-chevron-double-right ms-2"></i></button>
-                        </div>
+                        </div> #}
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
@@ -326,10 +348,10 @@
                             <h5 class="mb-3">{{juegos[0].nombre}}</h4>
                                 <p class="mb-0">{{juegos[0].descripcion}}</p>
                         </div>
-                        <div class="service-btn rounded-0 rounded-bottom">
+                        {# <div class="service-btn rounded-0 rounded-bottom">
                             <button id="cluedo" class="text-primary fw-medium border-0 bg-transparent">Leer mas<i
                                     class="bi bi-chevron-double-right ms-2"></i></button>
-                        </div>
+                        </div> #}
                     </div>
                 </div>
             </div>

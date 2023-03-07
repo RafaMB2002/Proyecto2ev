@@ -1,0 +1,66 @@
+{% extends 'landing/landingPage.html.twig' %}
+
+{% block body %}
+    <div class="container p-2">
+        <div class="card">
+            <div class="card-header text-center">
+                    <h3>Editar perfil</h3>
+            </div>
+            <div class="card-body text-center">
+                <form action="{{ path('edit_profile') }}" method="post" novalidate>
+                    <div class="row justify-content-center p-2">
+                        <label class="col-6">
+                            {{ form_label(form.Nombre) }}
+                        </label>
+                        <div class="col-6">
+                            {{ form_widget(form.Nombre) }}
+                        </div>
+                    </div>
+                    <div class="row justify-content-center p-2">
+                        <label class="col-md-6">
+                            {{ form_label(form.Apellidos) }}
+                        </label>
+                        <div class="col-md-6">
+                            {{ form_widget(form.Apellidos) }}
+                        </div>
+                    </div>
+                        {% for passwordField in form.password %}
+                            <div class="row justify-content-center p-2">
+                                <div class="col-md-6">
+                                    {{ form_label(passwordField, null, { 'attr': {'class': 'form-label'} }) }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form_widget(passwordField, { 'attr': {'class': 'form-input'} }) }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    <div class="row justify-content-center p-2">
+                            <input type="hidden" name="_target_path" value="/">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary rounded-pill py-2 px-3">Guardar</button>
+                            </div>
+                    {# <div class="row p-2">
+                        <div class="col-md-12">
+                            {{ form_widget(form.Guardar) }}
+                        </div>
+                    </div> #}
+                </form>
+        </div>
+        
+    </div>
+    <div class="card">
+            <div class="card-header text-center">
+                    <h3>Sesion</h3>
+            </div>
+            <div class="card-body text-center">
+                <h5>Tiempo en la ultima sesion: </h5> <p>{{user.getLastTimeSession}}</p>
+                <h5>Fecha de inicio de la ultima sesion: </h5> <p>{{user.getLastSession2}}</p>
+            </div>
+        </div>
+
+        {# {{ form(form) }} #}
+{% endblock %}
+
+{% block footer %}
+    
+{% endblock %}

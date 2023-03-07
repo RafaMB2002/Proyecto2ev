@@ -280,4 +280,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getLastTimeSession(){
+        return $this->last_session_time->format('%h horas %m minutos %s segundos');
+    }
+
+    public function getLastSession2(){
+        return $this->last_session->format('d-m-Y H:m:s');
+    }
 }
